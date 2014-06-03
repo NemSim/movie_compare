@@ -1,0 +1,8 @@
+.center.hero-unit
+	%h1 Welcome
+	=form_tag '/search', method: 'get' do
+		=label_tag(:type, "Search for")
+		=select(:type, :search_type, options_for_select([["Movie", "movie"], ["Person", "person"]]))
+		=label_tag(:query, "Called")
+		=text_field_tag(:query)
+		=submit_tag("Search")

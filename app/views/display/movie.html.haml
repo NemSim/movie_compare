@@ -1,0 +1,21 @@
+%h1 #{@movie[:title]} - #{@movie[:year]}
+=image_tag(@movie[:poster_url], alt: "Poster for #{@movie[:title]}")
+
+%h2 Synopsis
+%p= @movie[:plot]
+
+%h2 Written by
+-@movie[:cast][:writers].each do |writer|
+	%p
+		%a{ href: "/view?p=#{writer[:imdb_id]}", title: "#{writer[:name]}"}
+			#{writer[:name]}
+
+%h2 Directed by
+-@movie[:cast][:directors].each do |director|
+	%a{ href: "/view?p=#{director[:imdb_id]}", title: "#{director[:name]}"}
+		#{director[:name]}
+
+%h2 Starring (#{@movie[:cast][:actors].size}) actors
+-@movie[:cast][:actors].each do | actor |
+	%a{ href: "/view?p=#{actor[:imdb_id]}", title: "#{actor[:name]}" }
+		#{actor[:name]}
