@@ -1,0 +1,17 @@
+- if @intersecting_cast.present?
+	-if @intersecting_cast.size > 0
+		%h1 Movies #{@movie1[:title]} and #{@movie2[:title]} have intersecting cast members:
+		-@intersecting_cast.each do |cast|
+			%p
+				%a{ href: "/view?p=#{cast[:imdb_id]}", title: "#{cast[:name]}"}
+					#{cast[:name]}
+
+
+- if @intersecting_movies.present?
+	%p Movies in common
+
+- if @actor_present.present?
+	- if @actor_present[:value] == true
+		%p #{@actor[:name]} is present in #{@movie[:title]}
+	- else
+		%p #{@actor[:name]} is not present in #{@movie[:title]}

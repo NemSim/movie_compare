@@ -1,0 +1,6 @@
+=form_tag '/search', method: 'get' do
+	=select(:type, :search_type, options_for_select([["Movie", "movie"], ["Person", "person"]]))
+	=label_tag(:query, "Called")
+	=text_field_tag(:query)
+	=hidden_field_tag :compared_id, "#{@current_id}"
+	=submit_tag("Search")

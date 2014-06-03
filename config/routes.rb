@@ -3,8 +3,7 @@ MovieCompare::Application.routes.draw do
 
   match '/search', to: 'compare_pages#search'
   match '/view', to: 'compare_pages#view'
-
-  get "compare_pages/compare"
+  match '/compare', to: 'compare_pages#compare'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

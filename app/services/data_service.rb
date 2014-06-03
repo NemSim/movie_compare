@@ -114,8 +114,7 @@ class DataService
 		retVal = {}
 		retVal[:name] = json['actorName']
 		retVal[:imdb_id] = json['actorId']
-		retVal[:photo] = json['urlPhoto']
-		puts retVal
+		#retVal[:photo] = json['urlPhoto']
 		return retVal
 	end
 

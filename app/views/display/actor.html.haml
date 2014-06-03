@@ -1,6 +1,12 @@
 %h1 #{@actor[:name]}
 =image_tag(@actor[:photo_url], alt: "photo of #{@actor[:name]}")
-%p born #{@actor[:birth_name]} on #{@actor[:birth_date]}
+
+
+%h2 compare with
+=render 'shared/search_bar'
+
+%h2 Bio
+%p Born #{@actor[:birth_name]} on #{@actor[:birth_date]}
 %p= @actor[:bio]
 
 %h2 Filmography
