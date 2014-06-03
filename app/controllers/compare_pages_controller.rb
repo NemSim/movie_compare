@@ -19,18 +19,9 @@ class ComparePagesController < ApplicationController
 
   def compare_cast cast1, cast2
   	fullCast1 = get_full_cast cast1
-
-  	logger.debug "Cast 1"
-  	logger.debug fullCast1.size
-
   	fullCast2 = get_full_cast cast2
 
-  	logger.debug "Cast 2"
-  	logger.debug fullCast2.size
-
   	overlapCast = fullCast1 & fullCast2
-  	logger.debug "Overlapping cast"
-  	logger.debug overlapCast.size
 
   	return overlapCast
   end
@@ -46,7 +37,7 @@ class ComparePagesController < ApplicationController
   		}
   	}
 
-  	fullCast
+  	return fullCast
   end
 
   def is_actor_present actor, movie
@@ -55,12 +46,24 @@ class ComparePagesController < ApplicationController
   	retVal[:value] = false
 
   	actor[:filmography].each { |film|
-  		logger.debug "Comparing #{film[:imdb_id]} and #{movie_id}"
   		if film[:imdb_id] == movie_id
   			retVal[:value] = true
-  			logger.debug "THE SAME!!!!!!!!!!!!!!!!"
   			break
   		end
+  	}
+
+  	return retVal
+  end
+
+  def compare_actors actor1, actor2
+  	retVal = []
+  	actor1films = actor1[:filmography]
+  	actor2films = actor2[:filmography]
+
+  	actor1films.each { |film|
+  		if actor2films.any? { |item| item[:imdb_id] == film[:imdb_id] }
+			retVal.push film
+		end
   	}
 
   	return retVal
@@ -116,7 +119,9 @@ class ComparePagesController < ApplicationController
   			else
   				# compare to an actor
   				logger.debug " to an actor"
-  				@intersecting_movies = []
+  				@actor1 = @data_service.get_actor params[:compared_id]
+  				@actor2 = @actor
+  				@intersecting_movies = compare_actors @actor1, @actor2
   				render 'compare_pages/compare'
   			end
   		else

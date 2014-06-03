@@ -8,7 +8,11 @@
 
 
 - if @intersecting_movies.present?
-	%p Movies in common
+	%p #{@actor1[:name]} and #{@actor2[:name]} have #{@intersecting_movies.size} movies in common
+	-@intersecting_movies.each do |movie|
+		%p
+			%a{ href: "/view?m=#{movie[:imdb_id]}", title: "#{movie[:title]}"}
+				#{movie[:title]}
 
 - if @actor_present.present?
 	- if @actor_present[:value] == true

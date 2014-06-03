@@ -15,10 +15,12 @@
 
 %h2 Directed by
 -@movie[:cast][:directors].each do |director|
-	%a{ href: "/view?p=#{director[:imdb_id]}", title: "#{director[:name]}"}
-		#{director[:name]}
+	%p
+		%a{ href: "/view?p=#{director[:imdb_id]}", title: "#{director[:name]}"}
+			#{director[:name]}
 
 %h2 Starring (#{@movie[:cast][:actors].size}) actors
 -@movie[:cast][:actors].each do | actor |
-	%a{ href: "/view?p=#{actor[:imdb_id]}", title: "#{actor[:name]}" }
-		#{actor[:name]}
+	%p
+		%a{ href: "/view?p=#{actor[:imdb_id]}", title: "#{actor[:name]}" }
+			#{actor[:name]}
