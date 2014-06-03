@@ -1,18 +1,23 @@
-- if @intersecting_cast.present?
+- if !@intersecting_cast.nil?
 	-if @intersecting_cast.size > 0
-		%h1 Movies #{@movie1[:title]} and #{@movie2[:title]} have intersecting cast members:
+		%p Movies #{@movie1[:title]} and #{@movie2[:title]} have intersecting cast members:
 		-@intersecting_cast.each do |cast|
 			%p
 				%a{ href: "/view?p=#{cast[:imdb_id]}", title: "#{cast[:name]}"}
 					#{cast[:name]}
+	-else
+		%p Movies #{@movie1[:title]} and #{@movie2[:title]} have no intersecting cast members
 
 
-- if @intersecting_movies.present?
-	%p #{@actor1[:name]} and #{@actor2[:name]} have #{@intersecting_movies.size} movies in common
-	-@intersecting_movies.each do |movie|
-		%p
-			%a{ href: "/view?m=#{movie[:imdb_id]}", title: "#{movie[:title]}"}
-				#{movie[:title]}
+- if !@intersecting_movies.nil?
+	-if @intersecting_movies.size > 0
+		%p #{@actor1[:name]} and #{@actor2[:name]} have #{@intersecting_movies.size} work in common
+		-@intersecting_movies.each do |movie|
+			%p
+				%a{ href: "/view?m=#{movie[:imdb_id]}", title: "#{movie[:title]}"}
+					#{movie[:title]}
+	-else
+		%p #{@actor1[:name]} and #{@actor2[:name]} have no intersecting work
 
 - if @actor_present.present?
 	- if @actor_present[:value] == true
