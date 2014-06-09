@@ -1,16 +1,16 @@
-%h1 #{@actor[:name]}
-=image_tag(@actor[:photo_url], alt: "photo of #{@actor[:name]}")
+%h1 #{@actor.name}
+=image_tag(@actor.photo_url, alt: "photo of #{@actor.name}")
 
 
 %h2 compare with
 =render 'shared/search_bar'
 
 %h2 Bio
-%p Born #{@actor[:birth_name]} on #{@actor[:birth_date]}
-%p= @actor[:bio]
+%p Born #{@actor.birth_name} on #{@actor.birth_date}
+%p= @actor.bio
 
-%h2 Filmography
--@actor[:filmography].each do |film|
-	%p
-		%a{ href: "/view?m=#{film[:imdb_id]}", title: "#{film[:title]}"}
-			#{film[:title]} - #{film[:year]} as #{film[:role]}
+/ %h2 Filmography
+/ -@actor[:filmography].each do |film|
+/ 	%p
+/ 		%a{ href: "/view?m=#{film[:imdb_id]}", title: "#{film[:title]}"}
+/ 			#{film[:title]} - #{film[:year]} as #{film[:role]}

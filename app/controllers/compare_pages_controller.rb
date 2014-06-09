@@ -1,5 +1,5 @@
 class ComparePagesController < ApplicationController
-  before_filter :load_data_service, :load_logger
+  before_filter :load_search_service, :load_logger
 
   def home
   end
@@ -7,11 +7,14 @@ class ComparePagesController < ApplicationController
   def view
   	if !params[:p].nil?
   		# viewing a person
-  		@actor = @data_service.get_actor params[:p]
+  		#@actor = @data_service.get_actor params[:p]
+
+      @actor = Person.search_person(params[:p])
   		@current_id = @actor[:imdb_id]
   		render 'display/actor'
   	else
-  		@movie = @data_service.get_movie params[:m]
+  		#@movie = @data_service.get_movie params[:m]
+      @movie = Movie.search_movie params[:m]
   		@current_id = @movie[:imdb_id]
   		render 'display/movie'
   	end
@@ -69,8 +72,19 @@ class ComparePagesController < ApplicationController
   	return retVal
   end
 
-
   def search
+    @item = @search_service.search params[:query], params[:type][:search_type]
+    case params[:type][:search_type]
+    when "movie"
+      @movie = @item
+      render 'display/movie'
+    else
+      @actor = @item
+      render 'display/actor'
+    end
+  end
+
+  def searchOld
   	if params[:type][:search_type] == "movie"
   		
   		@movie = @data_service.search_movie(params[:query])
@@ -133,8 +147,8 @@ class ComparePagesController < ApplicationController
   	end  		
   end
 
-  def load_data_service(service = DataService.new)
-  	@data_service ||= service
+  def load_search_service(service = SearchService.new)
+  	@search_service ||= service
   end
 
   def load_logger(logger = Logger.new(STDOUT))
